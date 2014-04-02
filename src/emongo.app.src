@@ -1,0 +1,12 @@
+{application, emongo,
+ [
+  {description, "Mongodb driver"},
+  {vsn, "1.0.0"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { emongo_app, []}},
+  {env, []}
+ ]}.
