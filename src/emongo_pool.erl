@@ -112,11 +112,12 @@ handle_cast(_Msg, State) ->
 %% Description: Handling all non call/cast messages
 %%--------------------------------------------------------------------
 handle_info({'EXIT', Pid, Reason}, #pool{conn_pid=Pids}=State) ->
-    error_logger:error_msg("Pool ~p deactivated by worker death: ~p~n",
+    %%error_logger:error_msg("Pool ~p deactivated by worker death: ~p~n",
+    %%                       [State#pool.id, Reason]),
+    d:warning_msg("Pool ~p deactivated by worker death: ~p~n",
                            [State#pool.id, Reason]),
-    
     Pids1 = pqueue:filter(fun(Item) -> Item =/= Pid end, Pids),
-    {noreply, State#pool{conn_pid = Pids1, active=false}};
+    {noreply, State#pool{conn_pid = Pids1, active=true}};
 
 handle_info(?poll(), State) ->
     erlang:send_after(?POLL_INTERVAL, self(), poll),
